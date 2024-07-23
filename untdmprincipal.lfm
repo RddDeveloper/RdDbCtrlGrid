@@ -1,0 +1,74 @@
+object frmDmPrincipal: TfrmDmPrincipal
+  OnCreate = DataModuleCreate
+  OldCreateOrder = False
+  Height = 256
+  HorizontalOffset = 476
+  VerticalOffset = 215
+  Width = 427
+  object zConexao: TZConnection
+    ControlsCodePage = cCP_UTF8
+    Properties.Strings = (
+      'RawStringEncoding=DB_CP'
+    )
+    SQLHourGlass = True
+    DisableSavepoints = False
+    Port = 0
+    Database = 'C:\Programacao\Componentes\RdComponente\RdControlGrid\dados.db3'
+    Protocol = 'sqlite'
+    LibraryLocation = 'C:\Programacao\Componentes\RdComponente\RdControlGrid\sqlite3.dll'
+    Left = 32
+    Top = 32
+  end
+  object qryGrupo: TZQuery
+    Connection = zConexao
+    SQL.Strings = (
+      'select'
+      '    gp.codigo as codigo,'
+      '    gp.descricao as descricao,'
+      '    gp.status,'
+      '    gp.imagem'
+      'from grupo gp'
+      'order by 2'
+    )
+    Params = <>
+    Left = 96
+    Top = 32
+  end
+  object qryProduto: TZQuery
+    Connection = zConexao
+    SQL.Strings = (
+      'select'
+      '  pd.codigo as codigo,'
+      '  pd.descricao as descricao,'
+      '  pd.valor as valor'
+      'from produto pd'
+      ' where pd.cod_grupo = :idgrupo'
+    )
+    Params = <    
+      item
+        Name = 'idgrupo'
+      end>
+    Left = 100
+    Top = 88
+    ParamData = <    
+      item
+        Name = 'idgrupo'
+      end>
+  end
+  object zDelete: TZQuery
+    Connection = zConexao
+    SQL.Strings = (
+      'delete from produto where codigo = :codigo'
+    )
+    Params = <    
+      item
+        Name = 'codigo'
+      end>
+    Left = 96
+    Top = 152
+    ParamData = <    
+      item
+        Name = 'codigo'
+      end>
+  end
+end
